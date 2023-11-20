@@ -1,8 +1,8 @@
 import {Pressable, Text, TextInput, View} from "react-native";
-import {styles} from "../../src/style.js";
+import {styles} from "../src/style.js";
 import {useState} from "react";
 import {useRouter} from "expo-router";
-import { auth } from '../../src/firebase.config.js';
+import { auth } from '../src/firebase.config.js';
 import { sendPasswordResetEmail } from "firebase/auth";
 
 export default function ReplacePass(){

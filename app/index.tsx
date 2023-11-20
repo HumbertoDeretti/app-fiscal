@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { styles } from '../../src/style.js';
-import { auth } from '../../src/firebase.config.js';
+import { styles } from '../src/style.js';
+import { auth } from '../src/firebase.config.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {useRouter} from "expo-router";
 
@@ -17,7 +17,7 @@ export default function App() {
   }
 
   function newUser() {
-    router.replace("/newUser");
+    router.replace("/ChecklistScreen");
   }
 
   function userLogin(){

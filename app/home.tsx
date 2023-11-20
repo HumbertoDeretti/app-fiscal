@@ -1,6 +1,6 @@
 import {Pressable, Text, View} from "react-native";
-import { styles } from '../../src/style.js';
-import { auth } from '../../src/firebase.config.js';
+import { styles } from '../src/style.js';
+import { auth } from '../src/firebase.config.js';
 import { useRouter } from "expo-router";
 import { Auth, signOut } from "firebase/auth";
 

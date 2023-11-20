@@ -1,8 +1,8 @@
-import { auth } from '../../src/firebase.config.js';
+import { auth } from '../src/firebase.config.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {useState} from "react";
 import {Pressable, Text, View} from "react-native";
-import {styles} from "../../src/style.js";
+import {styles} from "../src/style.js";
 import { TextInput } from "react-native-gesture-handler";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {router, useRouter} from "expo-router";
