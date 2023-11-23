@@ -1,43 +1,82 @@
-import { auth } from '../src/firebase.config.js';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import {useState} from "react";
-import {Pressable, Text, View} from "react-native";
-import {styles} from "../src/style.js";
-import { TextInput } from "react-native-gesture-handler";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import {router, useRouter} from "expo-router";
+import React, { useState } from "react";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import { auth, firestore } from '../src/firebase.config.js'; // Certifique-se de que firestore é a referência correta para o seu Firestore
+import { useRouter } from "expo-router";
+import { styles } from "../src/style.js";
 
 export default function NewUser() {
     const [userMail, setUserMail] = useState("");
     const [userPass, setUserPass] = useState("");
     const [userRePass, setUserRePass] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [age, setAge] = useState("");
+
+    const router = useRouter();
 
     function newUser() {
-        if(userMail === "" || userPass === "" || userRePass === ""){
-            alert("Todos os campos devem ser preenchidos");
+        if (userMail === "" || userPass === "" || userRePass === "" || firstName === "" || lastName === "" || age === "") {
+            Alert.alert("Todos os campos devem ser preenchidos");
             return;
         }
-        if(userPass !== userRePass){
-            alert("A senha e a confirmação não são iguais")
+        if (userPass !== userRePass) {
+            Alert.alert("A senha e a confirmação não são iguais");
             return;
-        } else {
-            createUserWithEmailAndPassword(auth, userMail, userPass)
+        }
+
+        createUserWithEmailAndPassword(auth, userMail, userPass)
             .then((UserCredential) => {
                 const user = UserCredential.user;
-                alert("O usuário" + userMail + " foi criado. Faça o Login");
-                router.replace("/");
+
+                // Atualiza o perfil com nome completo
+                updateProfile(user, {
+                    displayName: `${firstName} ${lastName}`,
+                }).then(() => {
+                    // Adiciona detalhes adicionais ao Firestore
+                    const userRef = collection(firestore, "users"); // ajuste 'users' para sua coleção
+                    addDoc(userRef, {
+                        uid: user.uid,
+                        firstName,
+                        lastName,
+                        age,
+                        email: userMail
+                    });
+
+                    Alert.alert("Usuário Criado", `O usuário ${userMail} foi criado. Faça o Login.`);
+                    router.replace("/");
+                });
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                alert(errorMessage);
-                router.replace("/");
+                Alert.alert("Erro ao Criar Usuário", errorMessage);
             });
-        }
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.formTitle}>Novo Usuário</Text>
+            {/* Inputs para nome, sobrenome e idade */}
+            <TextInput
+                style={styles.formInput}
+                placeholder="Nome"
+                value={firstName}
+                onChangeText={setFirstName}
+            />
+            <TextInput
+                style={styles.formInput}
+                placeholder="Sobrenome"
+                value={lastName}
+                onChangeText={setLastName}
+            />
+            <TextInput
+                style={styles.formInput}
+                placeholder="Idade"
+                keyboardType="number-pad"
+                value={age}
+                onChangeText={setAge}
+            />
             <TextInput
                 style={styles.formInput}
                 placeholder="E-mail de usuário"

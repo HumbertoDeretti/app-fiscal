@@ -1,3 +1,14 @@
+//index.tsx
+import { decode as atob, encode as btoa } from 'base-64';
+
+if (!global.btoa) {
+  global.btoa = btoa;
+}
+
+if (!global.atob) {
+  global.atob = atob;
+}
+
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, Text, TextInput, View } from 'react-native';
@@ -5,6 +16,7 @@ import { styles } from '../src/style.js';
 import { auth } from '../src/firebase.config.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {useRouter} from "expo-router";
+
 
 
 export default function App() {
@@ -17,14 +29,14 @@ export default function App() {
   }
 
   function newUser() {
-    router.replace("/ChecklistScreen");
+    router.replace("/newUser");
   }
 
   function userLogin(){
     signInWithEmailAndPassword(auth, userMail, userPass)
     .then((userCredential) => {
       const user = userCredential.user;
-      router.replace("/home");
+      router.replace("/MainScreen");
     })
     .catch((error) => {
       const errorCode = error.code;

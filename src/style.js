@@ -90,7 +90,9 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f0f0', // A cor de fundo pode ser ajustada para corresponder à imagem
+    backgroundColor: '#f0f0f0',
+    height: 10,
+    
   },
   title: {
     fontSize: 24,
@@ -146,6 +148,13 @@ export const styles = StyleSheet.create({
   selectedOption: {
     backgroundColor: '#e4e4e4', // Um fundo diferente para indicar seleção, se desejado
     // Adicione estilos adicionais para uma opção selecionada
+  },
+
+  errorText: {
+    color: 'red', // Cor do texto para mensagens de erro
+    fontSize: 16, // Tamanho do texto
+    marginTop: 10, // Espaçamento acima do texto
+    // Adicione outros estilos conforme necessário
   },
 
   

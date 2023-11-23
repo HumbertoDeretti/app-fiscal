@@ -9,6 +9,7 @@ type Props = {
 };
 
 const ChecklistItem: React.FC<Props> = ({ pergunta, onSelect }) => {
+  console.log("ChecklistItem - Pergunta:", pergunta); // Logar a pergunta recebida
   return (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{pergunta.texto}</Text>
@@ -28,7 +29,3 @@ const ChecklistItem: React.FC<Props> = ({ pergunta, onSelect }) => {
 };
 
 export default ChecklistItem;
-
-
-
-
